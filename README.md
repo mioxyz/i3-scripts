@@ -1,2 +1,3 @@
 # i3-scripts
-a bunch of scripts that I use on my machines
+A bunch of scripts that I use on my machines, mostly written in ruby.
+
