@@ -25,6 +25,7 @@ if (currentDate - previousDate) < 750500500 then
    factor = 2
 end
 activeSink = i3_get_active_sink()
+system "pactl set-sink-mute #{activeSink} 0"
 volume = %x[pactl get-sink-volume #{activeSink}].split('/')[1].to_i
 if "decr" == ARGV[0].chomp then
    case volume
