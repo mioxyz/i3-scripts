@@ -14,7 +14,7 @@ def i3_get_sink_in_state(state)
          sinkNumber = line[6, line.length]
          parseState = true
       else
-         #puts "got into else case..."
+         # puts "got into else case..."
          if parseState then
             parseState = false;
             if line.include? "State: #{state}" then
@@ -56,7 +56,10 @@ def i3_get_active_sink_all() # Array
          end
       end
    end
-   # if we find no active sinks, choose the first suspended 
+   # if we find no active sinks, choose the first suspended
    # sink (sinks are suspended if no active audio media is playing).
    return []
 end
+
+
+puts i3_get_active_sink();
