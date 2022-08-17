@@ -41,13 +41,6 @@ File.open("/tmp/i3/workspace_names.txt").each do |line|
    if !occupied.include? name then
       puts name
       %x[i3-msg "workspace #{name}"]
-      sleep 0.1
-      %x[code #{ARGV[0]}]
-      # if ARGV.length > 1 then
-      #    %x(#{ARGV[0]} #{ARGV[1..ARGV.length].join(' ')})
-      # else
-      #    %x(#{ARGV[0]})
-      # end
       renameWorkspace name
       exit true
    end
