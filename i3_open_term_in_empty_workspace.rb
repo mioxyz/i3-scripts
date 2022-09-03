@@ -23,7 +23,7 @@ end
 
 # speed: 377 calls of main function to one second (tested with gnomon), which equates to ~2.6ms [+/-] 0.2ms per call, once ruby std has loaded. This doesn't factor out the 50ms which it takes to load ruby itself.
 # loading ruby itself costs about 50ms
-# 
+#
 
 occupied = findOccupied( JSON.parse(%x[i3-msg -t get_tree]), [])
 
@@ -41,7 +41,7 @@ File.open("/tmp/i3/workspace_names.txt").each do |line|
    if !occupied.include? name then
       puts name
       %x[i3-msg "workspace #{name}"]
-      %x[i3-msg "exec terminal"]
+      %x[i3-msg "exec alacritty"]
       renameWorkspace name
       exit true
    end
@@ -50,3 +50,4 @@ end
 puts "_FULL_"
 
 exit true
+
