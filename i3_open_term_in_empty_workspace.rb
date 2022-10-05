@@ -28,8 +28,7 @@ end
 occupied = findOccupied( JSON.parse(%x[i3-msg -t get_tree]), [])
 
 if 8 <= occupied.length then
-   #puts "THIS<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
-   %x[i3-msg "exec terminal"]
+   %x[i3-msg "exec alacritty"]
    %x[ notify-send --expire-time 1200 "all workspaces are occupid."]
    exit true
 end

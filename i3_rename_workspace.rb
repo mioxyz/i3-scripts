@@ -32,8 +32,6 @@ unless node.nil? or "workspace" == node["type"]
 
    case node["window_properties"]["class"]
       when "Alacritty"
-         suggestions.push "[TERM]"
-
          # check if we are editing something with kakoune
          if sTitle.match? "Kakoune" then
             suggestions.push("[K]")
@@ -43,9 +41,10 @@ unless node.nil? or "workspace" == node["type"]
          else
             suggestions.push "[T] #{node['name']}"
          end
+         suggestions.push "[TERM]"
 
       when "Chromium"
-         suggestions.push "[W]"
+         suggestions.push "Web"
          if node["name"].include? "Desmos" then
 	         suggestions.push "[W] Desmos"
          else
@@ -62,6 +61,12 @@ unless node.nil? or "workspace" == node["type"]
          includeName = false
       when "firefox"
          suggestions.push "[W] Firefox"
+      when "jetbrains-studio"
+         suggestions.push "Android"
+      when "Spotify"
+         suggestions.push "Music"
+      when "thunderbird"
+         suggestions.push "Mail"
    end
 
    if includeName then
@@ -92,21 +97,19 @@ suggestions.push "clear"
 #selection = %x[echo -e "#{suggestions.join("\n")}" | dmenu -fn 'Droid Sans Mono-14' -l 12]
 selection = %x[echo -e "#{suggestions.join("\n")}" | rofi -dmenu -e 'rename WS' ]
 
-puts selection
-
+# puts selection
 
 JSON.parse(%x[i3-msg -t get_workspaces]).each do |workspace|
-   if (workspace['focused']) then
-      number = workspace['name'][0]
-      if ["clear", '\n', ''].include? selection.chomp then
-         newName = number
-      else
-         newName = "#{number}:{#{number}} #{selection.chomp}"
-      end
-      %x[i3-msg 'rename workspace "#{workspace['name']}" to "#{newName}"']
-      %x[sed -i '#{number}s/.*/#{escapeSed(newName)}/' "/tmp/i3/workspace_names.txt"]
-      exit(true)
+   unless workspace['focused'] then next end
+
+   number = workspace['name'][0]
+   if ["clear", '\n', ''].include? selection.chomp then
+      newName = number
+   else
+      newName = "#{number}:{#{number}} #{selection.chomp}"
    end
+   %x[i3-msg 'rename workspace "#{workspace['name']}" to "#{newName}"']
+   %x[sed -i '#{number}s/.*/#{escapeSed(newName)}/' "/tmp/i3/workspace_names.txt"]
 end
 
 exit true

@@ -1,27 +1,14 @@
 #!/bin/ruby
 require 'json'
 require 'ostruct'
+
 # INCOMPLETE CODE
 # gave up on this because i3-msg cannot rename workspaces which 
 # do not exist.
 
-def getWorkspaces
-   def f(parent)
-      workspaces = []
-      if "workspace" == parent.type and "__i3_scratch" != parent.name then
-         workspaces.push parent
-      end
-      parent.nodes.each do |child|
-         workspaces.concat f child
-      end
-      return workspaces
-   end
-   return f JSON.parse(%x(i3-msg -t get_tree), object_class: OpenStruct )
-end
-
 occupiedWorkspaces = []
 
-getWorkspaces().each do |workspace|
+JSON.parse(%x[i3-msg -t get_workspaces]).each do |workspace|
    if workspace.nodes then
       if 0 == workspace.nodes.length then
          puts "workspace »#{workspace.name}« seems to be empty..."
@@ -48,12 +35,4 @@ workspaceNames.each do |name|
       end
    end
 end
-
-
-
-
-
-
-
-
 
