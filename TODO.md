@@ -7,4 +7,4 @@
        does chromium grab focus.
  - [ ] add rename rules for DataGrip and similar stuff
  - [ ] something is broken with DE rename alt+o function when using VS Code
-
+ - [ ] don't switch to new desktop before opening rofi if the active desktop is empty

@@ -3,14 +3,14 @@ require 'json'
 require 'ostruct'
 
 # INCOMPLETE CODE
-# gave up on this because i3-msg cannot rename workspaces which 
+# gave up on this because i3-msg cannot rename workspaces which
 # do not exist.
 
 occupiedWorkspaces = []
 
 JSON.parse(%x[i3-msg -t get_workspaces]).each do |workspace|
    if workspace.nodes then
-      if 0 == workspace.nodes.length then
+      if 0 == workspace["nodes"].length then
          puts "workspace »#{workspace.name}« seems to be empty..."
       else
          puts "workspace »#{workspace.name}« seems to have »#{workspace.nodes.length} nodes.«"
